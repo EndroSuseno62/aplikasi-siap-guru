@@ -93,8 +93,35 @@ export default function App() {
         })
       });
 
-      const result = await response.json();
-      if (!response.ok || !result.success) {
+      if (!response.ok) {
+        let errorMsg = `Gagal menghubungi server AI (Status: ${response.status})`;
+        try {
+          const errText = await response.text();
+          if (errText.trim().startsWith("{")) {
+            const errJson = JSON.parse(errText);
+            errorMsg = errJson.error || errorMsg;
+          } else {
+            if (errText.includes("UNAVAILABLE") || errText.includes("high demand") || errText.includes("503")) {
+              errorMsg = "Layanan model AI sedang sangat padat (503). Silakan coba klik tombol 'Mulai Susun' sekali lagi beberapa saat lagi.";
+            } else if (errText.includes("The page") || errText.startsWith("<!DOCTYPE")) {
+              errorMsg = "Server sedang memproses atau mengalami kendala jaringan. Silakan coba kembali sesaat lagi.";
+            } else if (errText) {
+              errorMsg = errText.substring(0, 160);
+            }
+          }
+        } catch (e) {}
+        throw new Error(errorMsg);
+      }
+
+      let result;
+      const rawText = await response.text();
+      try {
+        result = JSON.parse(rawText);
+      } catch (e) {
+        throw new Error("Format respon server tidak valid (Bukan JSON). Silakan coba susun ulang.");
+      }
+
+      if (!result.success) {
         throw new Error(result.error || "Terjadi kegagalan sewaktu memproses data.");
       }
 
