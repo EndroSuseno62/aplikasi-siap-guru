@@ -1,0 +1,6 @@
+{
+  "name": "SIAP GURU",
+  "description": "Sistem Administrasi Pembelajaran Guru (SIAP GURU) untuk penyusunan RPP (Modul Ajar), Materi Ajar, LKPD, dan Asesmen terintegrasi nilai integritas.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
