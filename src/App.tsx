@@ -36,6 +36,7 @@ export default function App() {
   const [data, setData] = useState<SIAPGURUData>(defaultSIAPGURUData);
   const [activeTab, setActiveTab] = useState<"rpp" | "materi" | "lkpd" | "asesmen">("rpp");
   const [isGenerating, setIsGenerating] = useState(false);
+  const [generationStage, setGenerationStage] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [aiAssistantOpen, setAiAssistantOpen] = useState(true);
   const [globalError, setGlobalError] = useState<string | null>(null);
@@ -59,6 +60,74 @@ export default function App() {
     if (window.confirm("Apakah Anda yakin ingin mengosongkan semua isian dan hasil dokumen untuk memulai administrasi baru?")) {
       setData(emptySIAPGURUData);
       setGlobalError(null);
+    }
+  };
+
+  // Generate all sections sequentially with rate limiting/jitter in mind and nice UX feedback
+  const handleGenerateAll = async () => {
+    if (!data.inputs.mataPelajaran || !data.inputs.materiPembelajaran) {
+      setGlobalError("Silakan isi nama 'Mata Pelajaran' dan 'Materi Pembelajaran' di panel kiri terlebih dahulu agar AI dapat menyusun dokumen.");
+      return;
+    }
+
+    setIsGenerating(true);
+    setGlobalError(null);
+    try {
+      const sections = ["rpp", "materi", "lkpd", "asesmen"];
+      const displayNames: { [key: string]: string } = {
+        rpp: "Menyusun RPP...",
+        materi: "Menyusun Materi...",
+        lkpd: "Menyusun LKPD...",
+        asesmen: "Menyusun Asesmen..."
+      };
+
+      for (const sec of sections) {
+        setGenerationStage(displayNames[sec]);
+        const currentSectionData = data[sec as keyof Omit<SIAPGURUData, "inputs">];
+
+        const response = await fetch("/api/generate", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            section: sec,
+            inputs: data.inputs,
+            currentData: currentSectionData
+          })
+        });
+
+        if (!response.ok) {
+          let errorMsg = `Gagal menyusun bagian ${sec.toUpperCase()}.`;
+          try {
+            const text = await response.text();
+            if (text.includes("503") || text.includes("UNAVAILABLE") || text.includes("high demand")) {
+              errorMsg = `Layanan AI sedang padat sewaktu menyusun bagian ${sec.toUpperCase()}. Silakan coba klik tombol 'Susun Semua Dokumen' sekali lagi.`;
+            }
+          } catch(e) {}
+          throw new Error(errorMsg);
+        }
+
+        const rawText = await response.text();
+        const result = JSON.parse(rawText);
+        if (!result.success) {
+          throw new Error(result.error || `Gagal menyusun bagian ${sec.toUpperCase()}.`);
+        }
+
+        setData(prev => ({
+          ...prev,
+          [sec]: result.data
+        }));
+
+        // Small jitter/delay between sequential AI calls to prevent 429 rate limit spikes
+        await new Promise((resolve) => setTimeout(resolve, 800));
+      }
+    } catch (err: any) {
+      console.error(err);
+      setGlobalError(err.message || "Gagal menyusun semua dokumen kurikulum.");
+    } finally {
+      setIsGenerating(false);
+      setGenerationStage(null);
     }
   };
 
@@ -223,7 +292,9 @@ export default function App() {
               inputs={data.inputs}
               onChange={handleInputsChange}
               onRegenerate={handleSectionRegenerate}
+              onGenerateAll={handleGenerateAll}
               isGenerating={isGenerating}
+              generationStage={generationStage}
               activeTab={activeTab}
             />
           </motion.div>

@@ -181,7 +181,7 @@ export default function DocumentMateri({ data, inputs }: DocumentMateriProps) {
                   <span>PETA KONSEP INTI</span>
                 </div>
                 <ul className="space-y-2 text-xs">
-                  {data.petaKonsep.map((p, pIdx) => (
+                  {(data.petaKonsep || []).map((p, pIdx) => (
                     <li key={pIdx} className="flex gap-2">
                       <span className="w-1.5 h-1.5 bg-blue-600 rounded-full mt-1.5 shrink-0" />
                       <span className="font-medium text-blue-900">{p}</span>
@@ -195,7 +195,7 @@ export default function DocumentMateri({ data, inputs }: DocumentMateriProps) {
             <div className="space-y-4">
               <h3 className="font-bold text-slate-800 text-xs uppercase tracking-wider pl-1">Materi Pembelajaran Utama</h3>
               
-              {data.subBab.map((sub, sIdx) => (
+              {(data.subBab || []).map((sub, sIdx) => (
                 <div key={sIdx} className="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-4">
                   <div>
                     <h4 className="font-bold text-blue-900 text-base mb-2">{sub.judul}</h4>
@@ -234,7 +234,7 @@ export default function DocumentMateri({ data, inputs }: DocumentMateriProps) {
                 <h3 className="font-bold text-slate-800 uppercase tracking-wider text-xs">Glosarium Telekomunikasi IP</h3>
               </div>
               <div className="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                {data.glosarium.map((g, gIdx) => (
+                {(data.glosarium || []).map((g, gIdx) => (
                   <div key={gIdx} className="bg-slate-50 p-3 rounded-lg border border-slate-100">
                     <strong className="text-blue-900 block mb-1 font-bold">{g.istilah}</strong>
                     <p className="text-slate-600 leading-relaxed">{g.definisi}</p>
@@ -298,7 +298,7 @@ export default function DocumentMateri({ data, inputs }: DocumentMateriProps) {
                 III. PETA KONSEP INTI PEMBELAJARAN
               </div>
               <ul style={{ paddingLeft: "20px", marginBottom: "10px", fontSize: "11pt" }}>
-                {data.petaKonsep.map((p, idx) => (
+                {(data.petaKonsep || []).map((p, idx) => (
                   <li key={idx} style={{ marginBottom: "4px" }}>{p}</li>
                 ))}
               </ul>
@@ -307,7 +307,7 @@ export default function DocumentMateri({ data, inputs }: DocumentMateriProps) {
               <div className="section-header" style={{ fontWeight: "bold", backgroundColor: "#f2f2f2", padding: "4px 8px", borderBottom: "2px solid black", marginTop: "15px", marginBottom: "8px", textTransform: "uppercase", fontSize: "11pt" }}>
                 IV. PENJABARAN SUB-BAB MATERI KOMPREHENSIF
               </div>
-              {data.subBab.map((sub, idx) => (
+              {(data.subBab || []).map((sub, idx) => (
                 <div key={idx} style={{ marginTop: "10px", marginBottom: "15px" }}>
                   <div style={{ fontStyle: "normal", fontWeight: "bold", fontSize: "11.5pt", marginBottom: "4px" }}>{sub.judul}</div>
                   <p className="content-p" style={{ textAlign: "justify", marginBottom: "8px", fontSize: "11pt", textIndent: "0.5in" }}>
@@ -333,7 +333,7 @@ export default function DocumentMateri({ data, inputs }: DocumentMateriProps) {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.glosarium.map((g, idx) => (
+                  {(data.glosarium || []).map((g, idx) => (
                     <tr key={idx}>
                       <td style={{ border: "1px solid black", padding: "6px", fontWeight: "bold", fontSize: "11pt" }}>{g.istilah}</td>
                       <td style={{ border: "1px solid black", padding: "6px", fontSize: "11pt" }}>{g.definisi}</td>

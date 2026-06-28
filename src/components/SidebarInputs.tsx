@@ -24,7 +24,9 @@ interface SidebarInputsProps {
   inputs: TeacherInputs;
   onChange: (inputs: TeacherInputs) => void;
   onRegenerate: (section: string) => void;
+  onGenerateAll?: () => void;
   isGenerating: boolean;
+  generationStage?: string | null;
   activeTab: string;
 }
 
@@ -55,7 +57,9 @@ export default function SidebarInputs({
   inputs,
   onChange,
   onRegenerate,
+  onGenerateAll,
   isGenerating,
+  generationStage,
   activeTab
 }: SidebarInputsProps) {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -298,24 +302,50 @@ export default function SidebarInputs({
         </div>
       </div>
 
-      <div className="p-4 bg-slate-950 border-t border-slate-800">
+      <div className="p-4 bg-slate-950 border-t border-slate-800 space-y-2">
+        {onGenerateAll && (
+          <button
+            onClick={onGenerateAll}
+            disabled={isGenerating}
+            className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 disabled:from-slate-800 disabled:to-slate-800 disabled:cursor-not-allowed text-white font-semibold py-2.5 px-4 rounded-lg shadow-lg hover:shadow-emerald-900/20 active:scale-[0.98] transition-all cursor-pointer"
+          >
+            {isGenerating && generationStage ? (
+              <>
+                <RefreshCw className="w-4 h-4 animate-spin text-emerald-200 animate-duration-1000" />
+                <span className="truncate">{generationStage}</span>
+              </>
+            ) : isGenerating ? (
+              <>
+                <RefreshCw className="w-4 h-4 animate-spin text-emerald-200 animate-duration-1000" />
+                <span>Menyusun...</span>
+              </>
+            ) : (
+              <>
+                <Sparkles className="w-4 h-4 text-emerald-300" />
+                <span>Susun Semua Dokumen</span>
+              </>
+            )}
+          </button>
+        )}
+
         <button
           onClick={() => onRegenerate(activeTab)}
           disabled={isGenerating}
-          className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 disabled:from-slate-800 disabled:to-slate-800 disabled:cursor-not-allowed text-white font-medium py-2.5 px-4 rounded-lg shadow-lg hover:shadow-blue-900/20 active:scale-[0.98] transition-all"
+          className="w-full flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-750 border border-slate-700 disabled:border-slate-800 disabled:bg-slate-800 disabled:cursor-not-allowed text-slate-200 font-medium py-2 px-4 rounded-lg active:scale-[0.98] transition-all cursor-pointer text-xs"
         >
-          {isGenerating ? (
+          {isGenerating && !generationStage ? (
             <>
-              <RefreshCw className="w-4 h-4 animate-spin text-blue-200" />
-              <span>Memproses AI...</span>
+              <RefreshCw className="w-3.5 h-3.5 animate-spin text-slate-400" />
+              <span>Memproses...</span>
             </>
           ) : (
             <>
-              <RefreshCw className="w-4 h-4" />
+              <RefreshCw className="w-3.5 h-3.5 text-slate-400" />
               <span>Regenerasi {getSectionName()}</span>
             </>
           )}
         </button>
+
         <p className="text-[10px] text-slate-500 text-center mt-2 leading-normal">
           Menggunakan AI Gemini 3.5 Flash untuk menyusun administrasi terintegrasi.
         </p>

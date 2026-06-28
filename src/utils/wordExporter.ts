@@ -102,14 +102,14 @@ export function downloadAllDocumentsAsWord(data: SIAPGURUData) {
 
   // === DOKUMEN 1: RPP ===
   let rppHtml = `
-    <div className="kop-title">
+    <div class="kop-title">
       <h3>RENCANA PELAKSANAAN PEMBELAJARAN (RPP) / MODUL AJAR</h3>
       <h4>${inputs.namaSekolah ? inputs.namaSekolah.toUpperCase() : "SEKOLAH SMK"}</h4>
       <p>Administrasi Kurikulum SMK Pusat Keunggulan - Integrasi Nilai Karakter</p>
       <hr style="border: 0; border-top: 2px double black; margin: 10px 0;" />
     </div>
 
-    <table className="no-border-table" style="width: 100%; margin-bottom: 15px;">
+    <table class="no-border-table" style="width: 100%; margin-bottom: 15px;">
       <tbody>
         <tr style="font-size: 11pt;">
           <td style="width: 20%;"><strong>Sekolah</strong></td>
@@ -138,7 +138,7 @@ export function downloadAllDocumentsAsWord(data: SIAPGURUData) {
       </tbody>
     </table>
 
-    <div className="section-title">I. IDENTIFIKASI PEMBELAJARAN</div>
+    <div class="section-title">I. IDENTIFIKASI PEMBELAJARAN</div>
     <table style="width: 100%;">
       <tbody>
         <tr>
@@ -167,7 +167,7 @@ export function downloadAllDocumentsAsWord(data: SIAPGURUData) {
       </tbody>
     </table>
 
-    <div className="section-title">II. DESAIN PEMBELAJARAN</div>
+    <div class="section-title">II. DESAIN PEMBELAJARAN</div>
     <table style="width: 100%;">
       <tbody>
         <tr>
@@ -195,7 +195,7 @@ export function downloadAllDocumentsAsWord(data: SIAPGURUData) {
       </tbody>
     </table>
 
-    <div className="section-title">III. PENGALAMAN BELAJAR MENDALAM (DEEP LEARNING)</div>
+    <div class="section-title">III. PENGALAMAN BELAJAR MENDALAM (DEEP LEARNING)</div>
   `;
 
   if (rpp.pengalamanBelajar && rpp.pengalamanBelajar.length > 0) {
@@ -238,7 +238,7 @@ export function downloadAllDocumentsAsWord(data: SIAPGURUData) {
   }
 
   rppHtml += `
-    <div className="section-title">IV. EVALUASI DAN ASESMEN</div>
+    <div class="section-title">IV. EVALUASI DAN ASESMEN</div>
     <table style="width: 100%;">
       <tbody>
         <tr>
@@ -266,7 +266,7 @@ export function downloadAllDocumentsAsWord(data: SIAPGURUData) {
     { label: "Rubrik Kolaborasi Diskusi Kelompok", data: rpp.lampiran?.rubrikDiskusi },
   ];
 
-  rppHtml += `<div className="section-title">V. LAMPIRAN RUBRIK PENILAIAN SECARA RINCI</div>`;
+  rppHtml += `<div class="section-title">V. LAMPIRAN RUBRIK PENILAIAN SECARA RINCI</div>`;
   rubrikList.forEach((rub) => {
     if (rub.data && rub.data.length > 0) {
       rppHtml += `
@@ -304,14 +304,14 @@ export function downloadAllDocumentsAsWord(data: SIAPGURUData) {
 
   // === DOKUMEN 2: MATERI AJAR ===
   let materiHtml = `
-    <div className="kop-title">
+    <div class="kop-title">
       <h3>RINGKASAN BUKU MATERI AJAR SISWA</h3>
       <h4>MATA PELAJARAN: ${inputs.mataPelajaran ? inputs.mataPelajaran.toUpperCase() : "MATA PELAJARAN"}</h4>
       <p>Administrasi Kurikulum SMK Pusat Keunggulan - Integrasi Nilai Karakter</p>
       <hr style="border: 0; border-top: 2px double black; margin: 10px 0;" />
     </div>
 
-    <table className="no-border-table" style="width: 100%; margin-bottom: 15px;">
+    <table class="no-border-table" style="width: 100%; margin-bottom: 15px;">
       <tbody>
         <tr style="font-size: 11pt;">
           <td style="width: 20%;"><strong>Materi Pokok</strong></td>
@@ -331,28 +331,28 @@ export function downloadAllDocumentsAsWord(data: SIAPGURUData) {
       </tbody>
     </table>
 
-    <div className="section-header">I. RINGKASAN MATERI UTAMA</div>
-    <p className="content-p">${materi.ringkasanMateri || "-"}</p>
+    <div class="section-header">I. RINGKASAN MATERI UTAMA</div>
+    <p class="content-p">${materi.ringkasanMateri || "-"}</p>
 
-    <div className="section-header">II. PENJABARAN TUJUAN, LITERASI, DAN INTEGRITAS SIKAP</div>
-    <p className="content-p">${materi.penjabaranTujuan || "-"}</p>
+    <div class="section-header">II. PENJABARAN TUJUAN, LITERASI, DAN INTEGRITAS SIKAP</div>
+    <p class="content-p">${materi.penjabaranTujuan || "-"}</p>
 
-    <div className="section-header">III. PETA KONSEP INTI PEMBELAJARAN</div>
+    <div class="section-header">III. PETA KONSEP INTI PEMBELAJARAN</div>
     <ul style="padding-left: 20px; margin-bottom: 15px;">
   `;
 
   if (materi.petaKonsep && materi.petaKonsep.length > 0) {
     materi.petaKonsep.forEach((p) => {
-      materiHtml += `<li className="list-item">${p}</li>`;
+      materiHtml += `<li class="list-item">${p}</li>`;
     });
   } else {
-    materiHtml += `<li className="list-item">-</li>`;
+    materiHtml += `<li class="list-item">-</li>`;
   }
 
   materiHtml += `
     </ul>
 
-    <div className="section-header">IV. PENJABARAN SUB-BAB MATERI KOMPREHENSIF</div>
+    <div class="section-header">IV. PENJABARAN SUB-BAB MATERI KOMPREHENSIF</div>
   `;
 
   if (materi.subBab && materi.subBab.length > 0) {
@@ -360,7 +360,7 @@ export function downloadAllDocumentsAsWord(data: SIAPGURUData) {
       materiHtml += `
         <div style="margin-top: 10px; margin-bottom: 15px;">
           <div style="font-weight: bold; font-size: 11pt; margin-bottom: 4px;">${sub.judul}</div>
-          <p className="content-p">${sub.konten}</p>
+          <p class="content-p">${sub.konten}</p>
           ${sub.visualHighlight ? `
             <div style="margin-left: 0.5in; font-style: italic; font-size: 10pt; color: #333; border-left: 3px solid #ccc; padding-left: 8px; margin-top: 5px; margin-bottom: 10px;">
               <strong>Ilustrasi Visual / Konfigurasi CLI:</strong> ${sub.visualHighlight}
@@ -372,7 +372,7 @@ export function downloadAllDocumentsAsWord(data: SIAPGURUData) {
   }
 
   materiHtml += `
-    <div className="section-header">V. GLOSARIUM TELEKOMUNIKASI JARINGAN IP</div>
+    <div class="section-header">V. GLOSARIUM TELEKOMUNIKASI JARINGAN IP</div>
     <table style="width: 100%;">
       <thead>
         <tr style="background-color: #f2f2f2;">
@@ -408,14 +408,14 @@ export function downloadAllDocumentsAsWord(data: SIAPGURUData) {
 
   // === DOKUMEN 3: LKPD ===
   let lkpdHtml = `
-    <div className="kop-title">
+    <div class="kop-title">
       <h3>LEMBAR KERJA PESERTA DIDIK (LKPD) DIGITAL</h3>
       <h4>MATA PELAJARAN: ${inputs.mataPelajaran ? inputs.mataPelajaran.toUpperCase() : "MATA PELAJARAN"}</h4>
       <p>Administrasi Kurikulum SMK Pusat Keunggulan - Integrasi Nilai Karakter</p>
       <hr style="border: 0; border-top: 2px double black; margin: 10px 0;" />
     </div>
 
-    <table className="no-border-table" style="width: 100%; margin-bottom: 15px;">
+    <table class="no-border-table" style="width: 100%; margin-bottom: 15px;">
       <tbody>
         <tr style="font-size: 11pt;">
           <td style="width: 20%;"><strong>Sekolah</strong></td>
@@ -444,39 +444,39 @@ export function downloadAllDocumentsAsWord(data: SIAPGURUData) {
       </tbody>
     </table>
 
-    <div className="section-header">I. PETUNJUK BELAJAR DAN KESELAMATAN KERJA (K3)</div>
+    <div class="section-header">I. PETUNJUK BELAJAR DAN KESELAMATAN KERJA (K3)</div>
     <ul style="padding-left: 20px; margin-bottom: 15px;">
   `;
 
   if (lkpd.petunjukBelajar && lkpd.petunjukBelajar.length > 0) {
     lkpd.petunjukBelajar.forEach((p) => {
-      lkpdHtml += `<li className="list-item">${p}</li>`;
+      lkpdHtml += `<li class="list-item">${p}</li>`;
     });
   }
 
   lkpdHtml += `
     </ul>
 
-    <div className="section-header">II. TUJUAN PRAKTIKUM TERUKUR</div>
-    <p className="content-p">${lkpd.tujuanPraktikum || "-"}</p>
+    <div class="section-header">II. TUJUAN PRAKTIKUM TERUKUR</div>
+    <p class="content-p">${lkpd.tujuanPraktikum || "-"}</p>
 
-    <div className="section-header">III. STUDI KASUS DUNIA KERJA (SOP INDUSTRI)</div>
-    <p className="content-p">${lkpd.skenarioDuniaNyata || "-"}</p>
+    <div class="section-header">III. STUDI KASUS DUNIA KERJA (SOP INDUSTRI)</div>
+    <p class="content-p">${lkpd.skenarioDuniaNyata || "-"}</p>
 
-    <div className="section-header">IV. ALAT DAN BAHAN</div>
+    <div class="section-header">IV. ALAT DAN BAHAN</div>
     <ul style="padding-left: 20px; margin-bottom: 15px;">
   `;
 
   if (lkpd.alatBahan && lkpd.alatBahan.length > 0) {
     lkpd.alatBahan.forEach((a) => {
-      lkpdHtml += `<li className="list-item">${a}</li>`;
+      lkpdHtml += `<li class="list-item">${a}</li>`;
     });
   }
 
   lkpdHtml += `
     </ul>
 
-    <div className="section-header">V. LANGKAH KERJA & FOKUS INTEGRITAS NYATA</div>
+    <div class="section-header">V. LANGKAH KERJA & FOKUS INTEGRITAS NYATA</div>
   `;
 
   if (lkpd.langkahKerja && lkpd.langkahKerja.length > 0) {
@@ -484,7 +484,7 @@ export function downloadAllDocumentsAsWord(data: SIAPGURUData) {
       lkpdHtml += `
         <div style="margin-top: 10px; margin-bottom: 15px;">
           <div style="font-weight: bold; font-size: 11pt; margin-bottom: 4px;">${l.langkah}</div>
-          <p className="content-p">${l.detail}</p>
+          <p class="content-p">${l.detail}</p>
           ${l.visualHint ? `
             <div style="margin-left: 0.5in; font-style: italic; font-size: 10pt; color: #444;">
               <strong>Petunjuk Visual / Skema:</strong> ${l.visualHint}
@@ -501,7 +501,7 @@ export function downloadAllDocumentsAsWord(data: SIAPGURUData) {
   }
 
   lkpdHtml += `
-    <div className="section-header">VI. TANTANGAN BERPIKIR KRITIS (SOAL HOTS)</div>
+    <div class="section-header">VI. TANTANGAN BERPIKIR KRITIS (SOAL HOTS)</div>
   `;
 
   if (lkpd.pertanyaanHots && lkpd.pertanyaanHots.length > 0) {
@@ -518,7 +518,7 @@ export function downloadAllDocumentsAsWord(data: SIAPGURUData) {
   }
 
   lkpdHtml += `
-    <div className="section-header">VII. REFLEKSI KARAKTER & INTEGRITAS GURU DAN SISWA</div>
+    <div class="section-header">VII. REFLEKSI KARAKTER & INTEGRITAS GURU DAN SISWA</div>
   `;
 
   if (lkpd.refleksiIntegritas && lkpd.refleksiIntegritas.length > 0) {
@@ -536,14 +536,14 @@ export function downloadAllDocumentsAsWord(data: SIAPGURUData) {
 
   // === DOKUMEN 4: EVALUASI & ASESMEN ===
   let asesmenHtml = `
-    <div className="kop-title">
+    <div class="kop-title">
       <h3>INSTRUMEN EVALUASI & ASESMEN PEMBELAJARAN</h3>
       <h4>MATA PELAJARAN: ${inputs.mataPelajaran ? inputs.mataPelajaran.toUpperCase() : "MATA PELAJARAN"}</h4>
       <p>Administrasi Kurikulum SMK Pusat Keunggulan - Kunci Jawaban Lengkap Guru</p>
       <hr style="border: 0; border-top: 2px double black; margin: 10px 0;" />
     </div>
 
-    <table className="no-border-table" style="width: 100%; margin-bottom: 15px;">
+    <table class="no-border-table" style="width: 100%; margin-bottom: 15px;">
       <tbody>
         <tr style="font-size: 11pt;">
           <td style="width: 20%;"><strong>Mata Pelajaran</strong></td>
@@ -564,7 +564,7 @@ export function downloadAllDocumentsAsWord(data: SIAPGURUData) {
       </tbody>
     </table>
 
-    <div className="section-header">BAGIAN A: PILIHAN GANDA (10 BUTIR FORMATIF INTEGRATIF)</div>
+    <div class="section-header">BAGIAN A: PILIHAN GANDA (10 BUTIR FORMATIF INTEGRATIF)</div>
   `;
 
   if (asesmen.pilihanGanda && asesmen.pilihanGanda.length > 0) {
@@ -589,7 +589,7 @@ export function downloadAllDocumentsAsWord(data: SIAPGURUData) {
   }
 
   asesmenHtml += `
-    <div className="section-header" style="margin-top: 20px;">BAGIAN B: SOAL ESAI (5 BUTIR ANALITIS TINGKAT TINGGI / HOTS)</div>
+    <div class="section-header" style="margin-top: 20px;">BAGIAN B: SOAL ESAI (5 BUTIR ANALITIS TINGKAT TINGGI / HOTS)</div>
   `;
 
   if (asesmen.esai && asesmen.esai.length > 0) {
@@ -611,13 +611,13 @@ export function downloadAllDocumentsAsWord(data: SIAPGURUData) {
 
   // === Tanda Tangan Pengesahan ===
   const ttdHtml = `
-    <div className="page-break"></div>
+    <div class="page-break"></div>
     <div style="margin-top: 40px; text-align: center;">
       <h3 style="font-size: 12pt; font-weight: bold;">HALAMAN PENGESAHAN ADMINISTRASI PEMBELAJARAN</h3>
       <p style="font-size: 11pt;">Telah diperiksa, divalidasi, dan disahkan untuk digunakan dalam KBM di kelas.</p>
     </div>
 
-    <table className="no-border-table" style="width: 100%; margin-top: 40px; border: none;">
+    <table class="no-border-table" style="width: 100%; margin-top: 40px; border: none;">
       <tbody>
         <tr style="font-size: 11pt; border: none;">
           <td style="width: 50%; border: none; text-align: center;">
